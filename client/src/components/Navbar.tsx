@@ -56,7 +56,7 @@ export default function Navbar() {
                     <img src={assets.logo} alt="logo" className="h-8" />
                 </Link>
 
-                <div className='hidden md:flex items-center gap-8 text-sm font-medium text-gray-300'>
+                <div className='hidden md:flex flex-1 items-center justify-center gap-8 text-sm font-medium text-gray-300'>
                     {navLinks.map((link) => (
                         <Link onClick={()=> scrollTo(0,0)} to={link.href} key={link.name} className="hover:text-white transition">
                             {link.name}
