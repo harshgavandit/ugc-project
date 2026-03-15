@@ -35,7 +35,6 @@ const samplePosts: Post[] = Array.from({ length: 12 }).map((_, i) => {
 
 export default function Community() {
   const [posts, setPosts] = useState<Post[]>(samplePosts);
-  const [query, setQuery] = useState("");
   const [activeTag, setActiveTag] = useState<string | null>(null);
   const [modal, setModal] = useState<Post | null>(null);
   const [spotlightIndex, setSpotlightIndex] = useState(0);
@@ -49,13 +48,8 @@ export default function Community() {
 
   // filtered posts
   const visible = posts.filter((p) => {
-    const matchesQuery =
-      query === "" ||
-      p.title.toLowerCase().includes(query.toLowerCase()) ||
-      p.prompt.toLowerCase().includes(query.toLowerCase()) ||
-      p.author.toLowerCase().includes(query.toLowerCase());
     const matchesTag = !activeTag || p.tags.includes(activeTag);
-    return matchesQuery && matchesTag;
+    return matchesTag;
   });
 
   // shuffle spotlight every 7s
