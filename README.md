@@ -119,31 +119,9 @@ Backend:
 npm run start
 ```
 
----
 
-## 📸 Screenshots
 
-*Add screenshots of your UI here to showcase the project.*
-
-Example:
-
-* Homepage
-* AI generation page
-* Community page
-
----
-
-## 📌 Future Improvements
-
-* AI prompt history dashboard
-* Save generated content for users
-* Like & share community creations
-* Improve AI generation speed
-* Add more AI models
-
----
-
-## 👨‍💻 Author
+## Author
 
 **Harsh Gavand**
 
@@ -152,6 +130,6 @@ https://github.com/harshgavandit
 
 ---
 
-## ⭐ Support
+##  Support
 
 If you like this project, consider giving it a **star ⭐ on GitHub**.
