@@ -1,4 +1,19 @@
 {
+  "name": "ugc-ai-platform",
+  "private": true,
+  "scripts": {
+    "install:all": "npm ci --prefix client && npm ci --prefix server",
+    "dev:client": "npm --prefix client run dev",
+    "dev:server": "npm --prefix server run server",
+    "lint": "npm --prefix client run lint && npm --prefix server run lint",
+    "typecheck": "npm --prefix client run typecheck && npm --prefix server run typecheck",
+    "test": "npm --prefix client test && npm --prefix server test",
+    "build": "npm --prefix client run build && npm --prefix server run build",
+    "verify": "npm run lint && npm run typecheck && npm test && npm run build",
+    "docker:up": "docker compose up --build",
+    "docker:down": "docker compose down",
+    "docker:logs": "docker compose logs -f"
+  },
   "dependencies": {
     "cloudflared": "^0.7.1"
   }
