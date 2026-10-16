@@ -1,5 +1,5 @@
 import { ArrowRightIcon } from 'lucide-react';
-import { GhostButton } from '../../../components/ui/Buttons';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 export default function CTA() {
@@ -23,7 +23,7 @@ export default function CTA() {
                             viewport={{ once: true }}
                             transition={{ type: "spring", stiffness: 250, damping: 70, mass: 1, delay: 0.2 }}
                         >
-                            Join thousands of brands creating viral UGC with AI. No credit card required. Start creating now.
+                            Explore this personal project with a public sample workspace. Inspect reference setup, a saved example, and provider error recovery without signing in.
                         </motion.p>
                         <motion.div
                             initial={{ y: 60, opacity: 0 }}
@@ -31,9 +31,7 @@ export default function CTA() {
                             viewport={{ once: true }}
                             transition={{ type: "spring", stiffness: 250, damping: 70, mass: 1, delay: 0.3 }}
                         >
-                            <GhostButton className="px-8 py-3 gap-2">
-                                Start Creating Now <ArrowRightIcon size={20} />
-                            </GhostButton>
+                            <Link reloadDocument to="/demo" className="inline-flex items-center gap-2 rounded-full border border-white/15 px-8 py-3">Explore sample workspace <ArrowRightIcon size={20} /></Link>
                         </motion.div>
                     </div>
                 </div>

@@ -1,8 +1,10 @@
-# UGC AI Platform
+# UGC Content Studio
 
 UGC AI is a full-stack content-generation platform that combines product and model images to create marketing imagery and short-form video. It includes authenticated project management, credit accounting, community publishing, Clerk webhooks, Google AI generation, Cloudinary media storage, and PostgreSQL persistence through Prisma.
 
-Live application: [ugc-project-harsh.vercel.app](https://ugc-project-harsh.vercel.app/)
+Personal project by Harsh Gavand. Live application: [ugc-project-harsh.vercel.app](https://ugc-project-harsh.vercel.app/)
+
+The public `/demo` workspace uses synthetic project records and existing repository assets to demonstrate reference setup, saved output and simulated provider error recovery. It runs without credentials or backend services. See [Public sample workspace](docs/PUBLIC_SAMPLE_WORKSPACE.md) for asset provenance, boundaries and deployment routing.
 
 ## Technology
 

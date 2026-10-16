@@ -4,12 +4,12 @@ export const featuresData = [
     {
         icon: <UploadIcon className="w-6 h-6" />,
         title: 'Smart Upload',
-        desc: 'Drag & drop your assets. We auto-optimize formats and sizes.'
+        desc: 'Choose product and model reference images for a generation project.'
     },
     {
         icon: <ZapIcon className="w-6 h-6" />,
-        title: 'Instant Generation',
-        desc: 'Optimized models deliver output in seconds with great fidelity.'
+        title: 'Image Generation',
+        desc: 'Submit references and a brief to the configured image provider. Availability depends on provider access and quota.'
     },
     {
         icon: <VideoIcon className="w-6 h-6" />,
@@ -67,15 +67,15 @@ export const plansData = [
 export const faqData = [
     {
         question: 'How does the AI generation work?',
-        answer: 'We leverage state-of-the-art diffusion models trained on millions of product images to blend your product into realistic scenes while preserving details, lighting and reflections.'
+        answer: 'The authenticated generator sends product and model references, an aspect ratio and a brief to the configured Google AI service. Generation depends on provider access, billing and quota. The public sample workspace makes no provider requests.'
     },
     {
         question: 'Do I own the generated images?',
-        answer: 'Yes — you receive full commercial rights to any images and videos generated on the platform. Use them for ads, ecommerce, social media and more.'
+        answer: 'Check the current terms of the configured provider and your rights to each reference image before using an output. Gallery samples illustrate the workflow and do not grant a separate commercial license.'
     },
     {
-        question: 'Can I cancel anytime?',
-        answer: 'Yes — you can cancel from your dashboard. You will retain access through the end of your billing period.'
+        question: 'Can I explore without an account?',
+        answer: 'Yes. Open the public sample workspace to explore reference setup, a saved example and a simulated provider error. Live creation and account features require sign-in and configured services.'
     },
     {
         question: 'What input formats do you support?',
@@ -87,25 +87,24 @@ export const footerLinks = [
     {
         title: "Quick Links",
         links: [
-            { name: "Home", url: "#" },
-            { name: "Features", url: "#" },
-            { name: "Pricing", url: "#" },
-            { name: "FAQ", url: "#" }
+            { name: "Home", url: "/" },
+            { name: "Sample workspace", url: "/demo" },
+            { name: "Features", url: "/#features" },
+            { name: "FAQ", url: "/#faq" }
         ]
     },
     {
-        title: "Legal",
+        title: "Project context",
         links: [
-            { name: "Privacy Policy", url: "#" },
-            { name: "Terms of Service", url: "#" }
+            { name: "Sample data & limitations", url: "/demo#project-context" },
+            { name: "Setup & service requirements", url: "https://github.com/harshgavandit/ugc-project#setup" }
         ]
     },
     {
-        title: "Connect",
+        title: "Source",
         links: [
-            { name: "Twitter", url: "#" },
-            { name: "LinkedIn", url: "#" },
-            { name: "GitHub", url: "#" }
+            { name: "GitHub repository", url: "https://github.com/harshgavandit/ugc-project" },
+            { name: "Developer profile", url: "https://github.com/harshgavandit" }
         ]
     }
 ];

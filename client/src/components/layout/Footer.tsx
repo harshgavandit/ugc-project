@@ -14,9 +14,9 @@ export default function Footer() {
             <div className="max-w-6xl mx-auto px-6">
                 <div className="flex flex-col md:flex-row items-start justify-between gap-10 py-10 border-b border-white/10">
                     <div>
-                        <img src={assets.logo} alt="logo" className="h-8" />
+                        <img src={assets.logo} alt="UGC Content Studio" className="h-8" />
                         <p className="max-w-[410px] mt-6 text-sm leading-relaxed">
-                            Create viral UGC in seconds. Upload product images and a model photo — our AI instantly produces professional lifestyle imagery and short-form videos.
+                            UGC Content Studio is a personal project by Harsh Gavand exploring reference-based image and video workflows. The public workspace contains labelled samples; live generation requires configured services.
                         </p>
                     </div>
 
@@ -31,7 +31,7 @@ export default function Footer() {
                                         (link: { name: string; url: string }, i) => (
                                             <li key={i}>
                                                 <a
-                                                    href="https://github.com/harshgavandit/ugc-project.git"
+                                                    href={link.url}
                                                     className="hover:text-white transition"
                                                 >
                                                     {link.name}

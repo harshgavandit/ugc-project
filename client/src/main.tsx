@@ -4,16 +4,19 @@ import App from './app/App'
 import {BrowserRouter} from 'react-router-dom'
 import { ClerkProvider } from '@clerk/clerk-react'
 import {dark} from "@clerk/themes"
+import DemoPage from './features/demo/DemoPage'
 
 // Import your Publishable Key
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 
-if (!PUBLISHABLE_KEY) {
+const isPublicDemo = window.location.pathname.replace(/\/+$/, '') === '/demo'
+
+if (!isPublicDemo && !PUBLISHABLE_KEY) {
   throw new Error('Missing Publishable Key')
 }
 
 createRoot(document.getElementById('root')! as HTMLElement).render(
-    <ClerkProvider
+    isPublicDemo ? <BrowserRouter><DemoPage /></BrowserRouter> : <ClerkProvider
     appearance={{
         theme: dark, 
         variables: {
