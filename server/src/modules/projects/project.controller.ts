@@ -11,6 +11,7 @@ export const createProject = async (req:Request, res: Response) => {
     let tempProjectId: string | undefined;
     const { userId } = req.auth();
     let isCreditDeducted = false;
+    let stage = 'upload_references';
 
     const {name = 'New Project', aspectRatio, userPrompt, productName, productDescription, targetLength = 5} = req.body;
 
@@ -52,6 +53,7 @@ export const createProject = async (req:Request, res: Response) => {
             })
         )
 
+         stage = 'create_project';
          const project = await prisma.project.create({
             data: {
                 name,
@@ -75,6 +77,7 @@ export const createProject = async (req:Request, res: Response) => {
             Output ecommerce-quality photo realistic imagery.
             Product: ${productName}. ${productDescription || ''}
             ${userPrompt || ''}`;
+         stage = 'openai_image_edit';
          const finalBuffer = await generateImage({
             images: images.map(image => ({ bytes: fs.readFileSync(image.path), mimeType: image.mimetype })),
             prompt, aspectRatio: aspectRatio || '9:16',
@@ -82,8 +85,10 @@ export const createProject = async (req:Request, res: Response) => {
 
          const base64Image = `data:image/png;base64,${finalBuffer.toString('base64')}`
 
+         stage = 'upload_generated_image';
          const uploadResult = await cloudinary.uploader.upload(base64Image, {resource_type: 'image'});
 
+         stage = 'save_result';
          await prisma.project.update({
             where: {id: project.id},
             data: {
@@ -95,6 +100,15 @@ export const createProject = async (req:Request, res: Response) => {
          res.json({projectId: project.id})
         
     } catch (error: unknown) {
+        const failure = error as { status?: number; http_code?: number; code?: string; message?: string };
+        // Log the failing boundary, never request bodies, headers, images or keys.
+        console.error('generation_failed', {
+            stage, status: failure?.status || failure?.http_code, code: failure?.code,
+            message: String(failure?.message || 'Unknown failure')
+                .replace(/sk-[A-Za-z0-9_-]+/g, '[redacted]')
+                .replace(/cloudinary:\/\/\S+/g, '[redacted]')
+                .slice(0, 400),
+        });
         const errorResponse = toGenerationErrorResponse(error);
 
         if(tempProjectId!){

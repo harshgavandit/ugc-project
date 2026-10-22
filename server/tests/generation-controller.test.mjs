@@ -31,10 +31,10 @@ function setup({ missingKey = false, providerFails = false } = {}) {
         '../../lib/generationError.js': { toGenerationErrorResponse: (error) => ({ status: error.status || 500, message: 'Generation unavailable' }) },
     };
     const exports = {};
-    new Function('require', 'exports', outputText)((name) => {
+    new Function('require', 'exports', 'console', outputText)((name) => {
         assert.ok(name in modules, `Unexpected dependency: ${name}`);
         return modules[name];
-    }, exports);
+    }, exports, { error() {} });
     const req = { auth: () => ({ userId: 'u1' }), body: { productName: 'Bag', aspectRatio: '9:16' }, files: [{ path: 'product.png', mimetype: 'image/png' }, { path: 'person.jpg', mimetype: 'image/jpeg' }] };
     const res = { statusCode: 200, status(code) { this.statusCode = code; return this; }, json(body) { this.body = body; return this; } };
     return { state, req, res, ...exports };
