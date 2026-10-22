@@ -5,6 +5,7 @@ import {BrowserRouter} from 'react-router-dom'
 import { ClerkProvider } from '@clerk/clerk-react'
 import {dark} from "@clerk/themes"
 import DemoPage from './features/demo/DemoPage'
+import { Analytics } from '@vercel/analytics/react'
 
 // Import your Publishable Key
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
@@ -16,7 +17,8 @@ if (!isPublicDemo && !PUBLISHABLE_KEY) {
 }
 
 createRoot(document.getElementById('root')! as HTMLElement).render(
-    isPublicDemo ? <BrowserRouter><DemoPage /></BrowserRouter> : <ClerkProvider
+    <>
+    {isPublicDemo ? <BrowserRouter><DemoPage /></BrowserRouter> : <ClerkProvider
     appearance={{
         theme: dark, 
         variables: {
@@ -28,5 +30,7 @@ createRoot(document.getElementById('root')! as HTMLElement).render(
         <BrowserRouter>
             <App />
         </BrowserRouter>
-    </ClerkProvider>
+    </ClerkProvider>}
+    <Analytics mode={import.meta.env.PROD ? 'production' : 'development'} />
+    </>
 )
