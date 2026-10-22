@@ -48,3 +48,8 @@ credit deduction. Test the video endpoint to confirm the unavailable message and
 unchanged credit balance. Do not treat build/test success as live generation proof.
 
 Rotate any API key pasted into a conversation, screenshot, or tracked file.
+
+If Cloudinary rejects uploads or times out, images are stored as data URLs in the
+existing project database fields. This keeps references and generated output durable
+without another storage provider. It increases PostgreSQL storage and API payload
+sizes; suitable for a small demo, not a substitute for dedicated media storage at scale.

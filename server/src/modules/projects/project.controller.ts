@@ -5,6 +5,7 @@ import {v2 as cloudinary } from 'cloudinary'
 import fs from 'fs';
 import { generateImage, requireImageProvider } from '../../lib/openaiImage.js';
 import { toGenerationErrorResponse } from '../../lib/generationError.js';
+import { storeImage } from '../../lib/imageStorage.js';
 
 
 export const createProject = async (req:Request, res: Response) => {
@@ -48,8 +49,8 @@ export const createProject = async (req:Request, res: Response) => {
 
         const uploadedImages = await Promise.all(
             images.map(async(item: any)=>{
-                const result = await cloudinary.uploader.upload(item.path, {resource_type: 'image'});
-                return result.secure_url
+                return storeImage(fs.readFileSync(item.path), item.mimetype,
+                    data => cloudinary.uploader.upload(data, {resource_type: 'image', timeout: 15000}));
             })
         )
 
@@ -83,16 +84,15 @@ export const createProject = async (req:Request, res: Response) => {
             prompt, aspectRatio: aspectRatio || '9:16',
          });
 
-         const base64Image = `data:image/png;base64,${finalBuffer.toString('base64')}`
-
          stage = 'upload_generated_image';
-         const uploadResult = await cloudinary.uploader.upload(base64Image, {resource_type: 'image'});
+         const generatedImage = await storeImage(finalBuffer, 'image/png',
+            data => cloudinary.uploader.upload(data, {resource_type: 'image', timeout: 15000}));
 
          stage = 'save_result';
          await prisma.project.update({
             where: {id: project.id},
             data: {
-                generatedImage: uploadResult.secure_url,
+                generatedImage,
                 isGenerating: false
             }
          })
