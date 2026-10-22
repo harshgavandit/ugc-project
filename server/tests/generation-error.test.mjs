@@ -42,3 +42,25 @@ test('does not expose unknown provider details to the browser', () => {
     assert.equal(response.status, 500);
     assert.doesNotMatch(response.message, /internal provider details/);
 });
+
+test('reports missing backend key without claiming a refund happened', () => {
+    const response = toGenerationErrorResponse({ status: 503, code: 'provider_not_configured' });
+    assert.equal(response.status, 503);
+    assert.match(response.message, /OPENAI_API_KEY/);
+    assert.doesNotMatch(response.message, /restored/);
+});
+
+test('distinguishes OpenAI billing exhaustion from temporary rate limits', () => {
+    const response = toGenerationErrorResponse({ status: 429, code: 'insufficient_quota' });
+    assert.equal(response.status, 503);
+    assert.match(response.message, /billing/i);
+});
+
+test('reports provider credentials and model access failures without exposing details', () => {
+    for (const status of [401, 403, 404]) {
+        const response = toGenerationErrorResponse({ status, message: 'secret detail' });
+        assert.equal(response.status, 503);
+        assert.match(response.message, /OpenAI/);
+        assert.doesNotMatch(response.message, /secret detail/);
+    }
+});

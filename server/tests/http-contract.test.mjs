@@ -4,7 +4,7 @@ import test from 'node:test';
 import { URL } from 'node:url';
 
 const appSource = await readFile(new URL('../src/app.ts', import.meta.url), 'utf8');
-const aiConfig = await readFile(new URL('../src/config/ai.ts', import.meta.url), 'utf8');
+const aiConfig = await readFile(new URL('../src/lib/openaiImage.ts', import.meta.url), 'utf8');
 const projectRoutes = await readFile(new URL('../src/modules/projects/project.routes.ts', import.meta.url), 'utf8');
 const userRoutes = await readFile(new URL('../src/modules/users/user.routes.ts', import.meta.url), 'utf8');
 const authMiddleware = await readFile(new URL('../src/middleware/requireAuth.ts', import.meta.url), 'utf8');
@@ -45,7 +45,6 @@ test('keeps Clerk user synchronization idempotent', () => {
     assert.match(clerkWebhook, /case "user\.deleted"[\s\S]*?prisma\.user\.deleteMany/);
 });
 
-test('uses supported Google generation model defaults', () => {
-    assert.match(aiConfig, /GEMINI_IMAGE_MODEL.*gemini-3-pro-image/);
-    assert.match(aiConfig, /GEMINI_VIDEO_MODEL.*veo-3\.1-generate-preview/);
+test('uses the lower-cost OpenAI image model by default', () => {
+    assert.match(aiConfig, /OPENAI_IMAGE_MODEL.*gpt-image-1-mini/);
 });

@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import type { Project } from "../types";
-import { ImageIcon, Loader2Icon, RefreshCwIcon, SparkleIcon, VideoIcon } from "lucide-react";
+import { ImageIcon, Loader2Icon, RefreshCwIcon, VideoIcon } from "lucide-react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { GhostButton, PrimaryButton } from "../../../components/ui/Buttons";
+import { GhostButton } from "../../../components/ui/Buttons";
 import { useAuth, useUser } from "@clerk/clerk-react";
 import api from "../../../lib/apiClient";
 import toast from "react-hot-toast";
@@ -34,27 +34,6 @@ const ResultPage = () => {
         }
     }, [getToken, projectId]);
 
-    const handleGenerateVideo = async () => {
-        setIsGenerating(true);
-        try {
-            const token = await getToken();
-            const { data } = await api.post(
-                "/api/project/video",
-                { projectId },
-                {
-                    headers: { Authorization: `Bearer ${token}` },
-                }
-            );
-
-            setProjectData((prev) => ({ ...prev, generatedVideo: data.videoUrl, isGenerating: false }));
-
-            toast.success(data.message);
-            setIsGenerating(false);
-        } catch (error: unknown) {
-            toast.error(getErrorMessage(error));
-            console.log(error);
-        }
-    };
 
     useEffect(() => {
         if (user && !project.id) {
@@ -123,17 +102,9 @@ const ResultPage = () => {
                                 <VideoIcon className="size-24" />
                             </div>
                             <h3 className="text-xl font-semibold mb-2">Video Magic</h3>
-                            <p className="text-gray-400 text-sm mb-6">Turn this static image into a dynamic video for social media.</p>
+                            <p className="text-gray-400 text-sm mb-6">OpenAI has discontinued its video API. New video generation is unavailable; your saved videos remain accessible.</p>
                             {!project.generatedVideo ? (
-                                <PrimaryButton onClick={handleGenerateVideo} disabled={isGenerating} className="w-full">
-                                    {isGenerating ? (
-                                        <>Generating Video...</>
-                                    ) : (
-                                        <>
-                                            <SparkleIcon className="size-4" /> Generate Video
-                                        </>
-                                    )}
-                                </PrimaryButton>
+                                <p role="status" className="text-sm text-amber-300">Video unavailable — no credits will be charged.</p>
                             ) : (
                                 <div className="p-3 bg-green-500/10 border border-green-500/20 rounded-xl text-green-400 text-center text-sm font-medium">Video Generated Successfully!</div>
                             )}

@@ -18,9 +18,9 @@ Copy-Item .env.docker.example .env
 
 Replace every placeholder credential in `.env`. The root `.env` file is ignored by Git.
 
-The generation backend uses Google AI. `GOOGLE_CLOUD_API_KEY` authorizes the default `gemini-3-pro-image` image model and `veo-3.1-generate-preview` video model; no OpenAI API key is used. The optional `GEMINI_IMAGE_MODEL` and `GEMINI_VIDEO_MODEL` values allow model upgrades without changing source code.
+The generation backend uses OpenAI. Set `OPENAI_API_KEY`; the default image model is `gpt-image-1-mini` with low-quality output to reduce costs. Override it with `OPENAI_IMAGE_MODEL` if needed.
 
-The configured Google AI project must be on a paid Gemini API tier for native image generation. A valid free-tier key can list the image models but receives a quota limit of zero when it tries to generate an image. Enable billing for the same project in Google AI Studio, then rebuild/restart the server; changing only the model ID does not provide free image-generation quota.
+OpenAI API billing and image-model access must be enabled for the key's project. Image failures return application credits. OpenAI's video API was discontinued on September 24, 2026; video generation is unavailable and does not charge credits. See [Vercel setup](VERCEL.md) for production configuration.
 
 ## Start the complete application
 
